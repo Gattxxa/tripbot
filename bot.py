@@ -5,7 +5,7 @@ from discord.ext import commands
 import re
 
 # 文字数制限
-LENGTH_LIMIT_TRIP: int = 21
+LENGTH_LIMIT_TRIP: int = 20
 LENGTH_LIMIT_NO_TRIP: int = 32
 
 
@@ -52,7 +52,7 @@ async def nickname(ctx, *, nick):
     if sharp != dia:
 
         # 名前が受け入れられる長さである場合
-        if sharp < 22 and dia < 22:
+        if sharp <= LENGTH_LIMIT_TRIP and dia <= LENGTH_LIMIT_TRIP:
 
             # 本物
             if sharp != -1 and (dia == -1 or dia > sharp):
@@ -68,7 +68,7 @@ async def nickname(ctx, *, nick):
                 trip = nick[split + 1:]
 
             name = nick[:split]
-            nick_n_trip = name + split_icon + trip
+            nick_n_trip = f'{name} {split_icon}{trip}'
             await ctx.author.edit(nick=nick_n_trip)
 
         # 名前が受け入れられない長さである場合
@@ -81,7 +81,7 @@ async def nickname(ctx, *, nick):
         length = len(nick)
 
         # 名前が受け入れられる長さである場合
-        if length < 33:
+        if length <= LENGTH_LIMIT_NO_TRIP:
             await ctx.author.edit(nick=nick)
 
         # 名前が受け入れられない長さである場合
