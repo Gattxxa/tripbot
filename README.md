@@ -1,5 +1,5 @@
-![](https://img.shields.io/badge/python-3.8%20or%20higher-blue) 
-![](https://i.imgur.com/Fx5vRFC.gif)   
+![](https://img.shields.io/badge/python-3.8%20or%20higher-blue)  
+![](https://i.imgur.com/Fx5vRFC.gif)  
 # 使い方  
 1. `discord.py`をインストール.  
 2. `bot.py`と同じ階層に`.token`を用意.  
