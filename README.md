@@ -1,4 +1,5 @@
-![](https://img.shields.io/badge/python-3.8%20or%20higher-blue)  
+![](https://img.shields.io/badge/python-3.8%20or%20higher-blue) 
+![](https://i.imgur.com/Fx5vRFC.gif)   
 # 使い方  
 1. `discord.py`をインストール.  
 2. `bot.py`と同じ階層に`.token`を用意.  
@@ -20,7 +21,6 @@ nicknameの後ろに `#` を付けた際は、以降の文字がトリップキ�
 ## 成りすまし防止  
 `/nickname nickname◆trip`  
 最初の `◆` が `◇` としてニックネームが変更されます。  
-![](https://i.imgur.com/Fx5vRFC.gif)  
   
 # 注意点  
 - **サーバーオーナーのニックネームはDiscordの仕様上Botによる変更ができません。**  
