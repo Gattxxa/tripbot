@@ -1,4 +1,4 @@
-![](https://img.shields.io/badge/python-3.8%20or%20higher-blue)
+![](https://img.shields.io/badge/python-3.8%20or%20higher-blue)  
 ![](https://i.imgur.com/Fx5vRFC.gif)
 
 # 使い方
@@ -33,6 +33,3 @@ nicknameの後ろに `#` を付けた際は、以降の文字がトリップキ�
 
 - **サーバーオーナーのニックネームはDiscordの仕様上Botによる変更ができません。**
   - こればかりはどうしようもない。
-- **ニックネームに空白を使用することはできません。**
-  - 作る段階で想定し忘れていました。
-    - 元々身内用のBotなので必要があれば直します。
