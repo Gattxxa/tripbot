@@ -55,12 +55,13 @@ async def nickname(ctx, nickname):
             if sharp != -1 and (dia == -1 or dia > sharp):
                 split_icon = '◆'
                 split = sharp
+                trip = generate_trip(nickname[split+1:])
             # なりすまし
             elif dia != -1 and (sharp == -1 or sharp > dia):
                 split_icon = '◇'
                 split = dia
+                trip = nickname[split+1:]
             name = nickname[:split]
-            trip = nickname[split+1:]
             nickname_n_trip = name + split_icon + trip
             await ctx.author.edit(nick=nickname_n_trip)
         else:
