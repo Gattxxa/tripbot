@@ -60,7 +60,7 @@ async def nickname(ctx, nickname):
                 split_icon = '◇'
                 split = dia
             name = nickname[:split]
-            trip = generate_trip(nickname[split+1:])
+            trip = nickname[split+1:]
             nickname_n_trip = name + split_icon + trip
             await ctx.author.edit(nick=nickname_n_trip)
         else:
