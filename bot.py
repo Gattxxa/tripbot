@@ -21,7 +21,7 @@ def generate_trip(trip_key):
 
 
 # 文字数制限ヒント
-def length_hint(ctx, length, limit):
+def length_hint(ctx, length: int, limit: int):
     return f'<@{str(ctx.author.id)}> 名前が長すぎます。({str(length)}/{str(limit)}文字)'
 
 
@@ -68,8 +68,8 @@ async def nickname(ctx, *, nick):
                 trip = nick[split + 1:]
 
             name = nick[:split]
-            nickname_n_trip = name + split_icon + trip
-            await ctx.author.edit(nick=nickname_n_trip)
+            nick_n_trip = name + split_icon + trip
+            await ctx.author.edit(nick=nick_n_trip)
 
         # 名前が受け入れられない長さである場合
         else:
@@ -79,7 +79,6 @@ async def nickname(ctx, *, nick):
     # ニックネームの変更(トリップキー無し)
     else:
         length = len(nick)
-        print(nick)
 
         # 名前が受け入れられる長さである場合
         if length < 33:
