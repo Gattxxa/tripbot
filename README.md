@@ -4,7 +4,7 @@
 # 使い方
 
 1. `discord.py`をインストール.
-   1. `python -m pip -r requirements.txt`を実行.
+   1. `python -m pip install -r requirements.txt`を実行.
 1. `bot.py`と同じ階層に`.token`を用意.
 1. `bot.py`を実行.
 
