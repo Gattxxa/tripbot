@@ -25,20 +25,13 @@ def length_hint(ctx, length: int, limit: int):
     return f'<@{str(ctx.author.id)}> 名前が長すぎます。({str(length)}/{str(limit)}文字)'
 
 
-# ボット設定
-bot = commands.Bot(command_prefix='/')
-bot.remove_command('help')
-
-
-# ボットステータス
-@bot.event
-async def on_ready():
-    print('online')
-    status = '/nickname nickname#tripkey '
-    await bot.change_presence(activity=discord.Game(name=status, type=1))
-
-
+# ニックネームからトリップキーと '#' の位置を抽出
 def extract_trip_key(nickname: str) -> tuple[str, int] | None:
+    """
+    Extract a trip key and position of the trip marker from the specified nickname.
+    Return None if no trip key exists.
+    NOTE: the trip key is not a trip.
+    """
     trip_marker_pos = nickname.find('#')
     if trip_marker_pos == -1:
         return
@@ -51,6 +44,19 @@ def extract_trip_key(nickname: str) -> tuple[str, int] | None:
     trip_key = nickname[trip_marker_pos + 1:]
 
     return (trip_key, trip_marker_pos)
+
+
+# ボット設定
+bot = commands.Bot(command_prefix='/')
+bot.remove_command('help')
+
+
+# ボットステータス
+@bot.event
+async def on_ready():
+    print('online')
+    status = '/nickname nickname#tripkey '
+    await bot.change_presence(activity=discord.Game(name=status, type=1))
 
 
 # ニックネームコマンド
