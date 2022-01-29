@@ -1,4 +1,4 @@
-![](https://img.shields.io/badge/python-3.8%20or%20higher-blue)  
+![](https://img.shields.io/badge/python-3.10.x-blue?style=for-the-badge&logo=python)  
 ![](https://i.imgur.com/Fx5vRFC.gif)
 
 # 使い方
