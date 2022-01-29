@@ -52,9 +52,8 @@ def extract_trip_key(nickname: str) -> tuple[str, int] | None:
 
     return (trip_key, trip_marker_pos)
 
+
 # ニックネームコマンド
-
-
 @bot.command()
 async def nickname(ctx, *, nick: str):
     # メッセージ削除 (トリップキーバレ防止)
