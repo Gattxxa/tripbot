@@ -25,6 +25,27 @@ def length_hint(ctx, length: int, limit: int):
     return f'<@{str(ctx.author.id)}> 名前が長すぎます。({str(length)}/{str(limit)}文字)'
 
 
+# ニックネームからトリップキーと '#' の位置を抽出
+def extract_trip_key(nickname: str) -> tuple[str, int] | None:
+    """
+    Extract a trip key and position of the trip marker from the specified nickname.
+    Return None if no trip key exists.
+    NOTE: the trip key is not a trip.
+    """
+    trip_marker_pos = nickname.find('#')
+    if trip_marker_pos == -1:
+        return
+
+    # NOTE: 仕様上空白文字はトリップキーとして有効です (`# ` で wqLZLRuzPQ となります)
+    # トリップキーが空の場合
+    if trip_marker_pos == len(nickname) - 1:
+        return
+
+    trip_key = nickname[trip_marker_pos + 1:]
+
+    return (trip_key, trip_marker_pos)
+
+
 # ボット設定
 bot = commands.Bot(command_prefix='/')
 bot.remove_command('help')
@@ -40,53 +61,29 @@ async def on_ready():
 
 # ニックネームコマンド
 @bot.command()
-async def nickname(ctx, *, nick):
+async def nickname(ctx, *, nick: str):
     # メッセージ削除 (トリップキーバレ防止)
     await ctx.message.delete()
 
     # なりすまし防止
-    sharp = nick.find('#')
-    dia = nick.find('◆')
+    nick = nick.replace('◆', '◇')
 
-    # ニックネームの変更(トリップキー有り)
-    if sharp != dia:
-
-        # 名前が受け入れられる長さである場合
-        if sharp <= LENGTH_LIMIT_TRIP and dia <= LENGTH_LIMIT_TRIP:
-
-            # 本物
-            if sharp != -1 and (dia == -1 or dia > sharp):
-                split_icon = '◆'
-                split = sharp
-                trip = generate_trip(nick[split + 1:])
-
-            # なりすまし
-            # if dia != -1 and (sharp == -1 or sharp > dia):
-            else:
-                split_icon = '◇'
-                split = dia
-                trip = nick[split + 1:]
-
-            name = nick[:split]
-            nick_n_trip = f'{name} {split_icon}{trip}'
-            await ctx.author.edit(nick=nick_n_trip)
-
-        # 名前が受け入れられない長さである場合
-        else:
-            length = max(sharp, dia)
-            await ctx.send(length_hint(ctx, length, LENGTH_LIMIT_TRIP))
-
-    # ニックネームの変更(トリップキー無し)
+    extracted = extract_trip_key(nick)
+    if extracted:
+        trip_key, trip_marker_pos = extracted
+        if trip_marker_pos > LENGTH_LIMIT_TRIP:
+            await ctx.send(length_hint(ctx, trip_marker_pos, LENGTH_LIMIT_TRIP))
+            return
+        trip = generate_trip(trip_key)
+        name = nick[:trip_marker_pos]
+        nick = f'{name} ◆{trip}'
+        assert len(nick) <= LENGTH_LIMIT_NO_TRIP
     else:
         length = len(nick)
-
-        # 名前が受け入れられる長さである場合
-        if length <= LENGTH_LIMIT_NO_TRIP:
-            await ctx.author.edit(nick=nick)
-
-        # 名前が受け入れられない長さである場合
-        else:
+        if length > LENGTH_LIMIT_NO_TRIP:
             await ctx.send(length_hint(ctx, length, LENGTH_LIMIT_NO_TRIP))
+            return
+    await ctx.author.edit(nick=nick)
 
 
 # bot.pyが直接起動されている場合
